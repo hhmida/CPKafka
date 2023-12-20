@@ -18,11 +18,15 @@ github:
 # List the start up tasks. Learn more https://www.gitpod.io/docs/config-start-tasks/
 tasks:
   - name: Setup
-    init: gp open README.md && git clone https://github.com/confluentinc/cp-all-in-one && git clone https://github.com/sknop/kafka-docker-composer && gp sync-done setup
+    init: git clone https://github.com/confluentinc/cp-all-in-one && git clone https://github.com/sknop/kafka-docker-composer && gp sync-done setup
     command: exit
   - name: Create Compose
-    init: gp sync-await setup
-    command: cd kafka-docker-composer && python kafka_docker_composer.py -z 3 -b 3 -C 2 -s 2 --control-center -p -r 7.5.0 --docker-compose-file cp7-zk.yaml && python kafka_docker_composer.py -c 3 -b 3 -C 2 -s 2 --control-center -p -r 7.5.0 --docker-compose-file cp7-kraft.yaml && exit
+    init: gp sync-await setup && cd kafka-docker-composer && python kafka_docker_composer.py -z 3 -b 3 -C 2 -s 2 --control-center -p -r 7.5.0 --docker-compose-file cp7-zk.yaml && python kafka_docker_composer.py -c 3 -b 3 -C 2 -s 2 --control-center -p -r 7.5.0 --docker-compose-file cp7-kraft.yaml && gp sync-done composer
+    command: exit
+    openMode: split-right
+  - name: Create Compose
+    init: gp sync-await composer
+    command: cd kafka-docker-composer 
     openMode: split-right
   
 

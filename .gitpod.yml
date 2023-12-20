@@ -26,7 +26,7 @@ tasks:
     openMode: split-right
   - name: Create Compose
     init: gp sync-await composer
-    command: cd kafka-docker-composer 
+    command: cd kafka-docker-composer && clear
     openMode: split-right
   
 
